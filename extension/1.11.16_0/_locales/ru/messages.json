@@ -1,0 +1,194 @@
+{
+   "add": {
+      "description": "",
+      "message": "Добавить"
+   },
+   "addModuleText": {
+      "description": "",
+      "message": "Добавить модуль"
+   },
+   "apiKeyPlaceholder": {
+      "description": "",
+      "message": "Введите API-ключ"
+   },
+   "apiKeyTitle": {
+      "description": "",
+      "message": "API-ключ"
+   },
+   "autoClick": {
+      "description": "",
+      "message": "Автоматический клик"
+   },
+   "autoModule": {
+      "description": "",
+      "message": "Автоматически"
+   },
+   "autoSolve": {
+      "description": "",
+      "message": "Автоматическое решение"
+   },
+   "automaticCaptchaSolving": {
+      "description": "",
+      "message": "Автоматическое решение капч"
+   },
+   "balance": {
+      "description": "",
+      "message": "Баланс"
+   },
+   "blacklistControl": {
+      "description": "",
+      "message": "Управление черным списком"
+   },
+   "blacklistDescription": {
+      "description": "",
+      "message": "Распознавание капч на добавленных сайтах будет отключено"
+   },
+   "close_button": {
+      "description": "",
+      "message": "Закрыть"
+   },
+   "delayAfterLoadPage": {
+      "description": "",
+      "message": "Задержка перед решением сохраненной капчи"
+   },
+   "delayBetweenClickEnabled": {
+      "description": "",
+      "message": "Задержка между кликами"
+   },
+   "delayBetweenClickValue": {
+      "description": "",
+      "message": "Задержка между кликами (мс)"
+   },
+   "delayStartCount": {
+      "description": "",
+      "message": "Задержка перед началом решения кликами"
+   },
+   "emptyKey": {
+      "description": "",
+      "message": "Пустой ключ"
+   },
+   "enterModuleName": {
+      "description": "",
+      "message": "Введите название модуля"
+   },
+   "extDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Облачный сервис для автоматического распознавания капч"
+   },
+   "extDescFirefox": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Облачный сервис для автоматического решения капч"
+   },
+   "extName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "CapMonster Cloud — автоматическое разгадывание капч"
+   },
+   "extNameFirefox": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "CapMonster Cloud — автоматическое решение капч"
+   },
+   "extShortName": {
+      "description": "",
+      "message": "CapMonster Cloud"
+   },
+   "getKey": {
+      "description": "",
+      "message": "Получить ключ"
+   },
+   "globalObjectDescription": {
+      "description": "",
+      "message": "Название поля для взаимодействия с расширением через глобальный объект. Подробнее о настройках расширения можно узнать \u003Ca href=\"https://docs.capmonster.cloud/ru/docs/extension/ext-settings\" target=\"_blank\" rel=\"noreferrer\" style=\"color: #7D6EFF\">в статье\u003C/a>."
+   },
+   "globalVariableSetting": {
+      "description": "",
+      "message": "Название глобального объекта"
+   },
+   "help": {
+      "description": "",
+      "message": "Справка"
+   },
+   "login": {
+      "description": "",
+      "message": "Логин"
+   },
+   "manualRecognition": {
+      "description": "",
+      "message": "Ручное распознавание"
+   },
+   "manualRecognitionDescription": {
+      "description": "",
+      "message": "Эта функция позволяет начинать решение капчи методом «Токен» не автоматически, а по нажатию на кнопку «Решить»"
+   },
+   "markImageAsCaptcha": {
+      "description": "",
+      "message": "Отметить изображение как капчу"
+   },
+   "off": {
+      "description": "",
+      "message": "Выкл"
+   },
+   "on": {
+      "description": "",
+      "message": "Вкл"
+   },
+   "password": {
+      "description": "",
+      "message": "Пароль"
+   },
+   "port": {
+      "description": "",
+      "message": "Порт"
+   },
+   "proxy": {
+      "description": "",
+      "message": "Прокси"
+   },
+   "proxyType": {
+      "description": "",
+      "message": "Тип прокси"
+   },
+   "rcInfoText": {
+      "description": "",
+      "message": "Только click"
+   },
+   "repeatSolveAttempts": {
+      "description": "",
+      "message": "Повторно решать капчи в случае ошибки, раз"
+   },
+   "selectInputForCaptchaResult": {
+      "description": "",
+      "message": "Выбрать поле для результата капчи"
+   },
+   "settings": {
+      "description": "",
+      "message": "Настройки"
+   },
+   "support": {
+      "description": "",
+      "message": "Поддержка"
+   },
+   "textCaptcha": {
+      "description": "",
+      "message": "Текстовая капча"
+   },
+   "textCaptchaHelpLink": {
+      "description": "",
+      "message": "https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2259091457"
+   },
+   "textCaptchaModule": {
+      "description": "",
+      "message": "Текстовый модуль"
+   },
+   "textCaptchaSaveOnSite": {
+      "description": "",
+      "message": "Сохранять элементы решения капчи для сайтов"
+   },
+   "topUp": {
+      "description": "",
+      "message": "Пополнить"
+   },
+   "wrongKey": {
+      "description": "",
+      "message": "Неверный ключ"
+   }
+}

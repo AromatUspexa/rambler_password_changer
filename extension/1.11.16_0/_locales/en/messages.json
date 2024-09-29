@@ -1,0 +1,194 @@
+{
+   "add": {
+      "description": "",
+      "message": "Add"
+   },
+   "addModuleText": {
+      "description": "",
+      "message": "Add module"
+   },
+   "apiKeyPlaceholder": {
+      "description": "",
+      "message": "Enter API key"
+   },
+   "apiKeyTitle": {
+      "description": "",
+      "message": "API-key"
+   },
+   "autoClick": {
+      "description": "",
+      "message": "Auto click"
+   },
+   "autoModule": {
+      "description": "",
+      "message": "Auto"
+   },
+   "autoSolve": {
+      "description": "",
+      "message": "Auto solve"
+   },
+   "automaticCaptchaSolving": {
+      "description": "",
+      "message": "Automated captcha solving"
+   },
+   "balance": {
+      "description": "",
+      "message": "Balance"
+   },
+   "blacklistControl": {
+      "description": "",
+      "message": "Blacklist control"
+   },
+   "blacklistDescription": {
+      "description": "",
+      "message": "Captcha solving on added websites will be disabled"
+   },
+   "close_button": {
+      "description": "",
+      "message": "Close"
+   },
+   "delayAfterLoadPage": {
+      "description": "",
+      "message": "Delay before start solve saved captcha"
+   },
+   "delayBetweenClickEnabled": {
+      "description": "",
+      "message": "Delay between click"
+   },
+   "delayBetweenClickValue": {
+      "description": "",
+      "message": "Delay between click (ms)"
+   },
+   "delayStartCount": {
+      "description": "",
+      "message": "Delay between start solve captcha clicks"
+   },
+   "emptyKey": {
+      "description": "",
+      "message": "Empty key"
+   },
+   "enterModuleName": {
+      "description": "",
+      "message": "Enter text module"
+   },
+   "extDesc": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Online service for automated captcha solving"
+   },
+   "extDescFirefox": {
+      "description": "The description of the application, displayed in the web store.",
+      "message": "Online service for automated captcha solving"
+   },
+   "extName": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "CapMonster Cloud — automated captcha solver"
+   },
+   "extNameFirefox": {
+      "description": "The title of the application, displayed in the web store.",
+      "message": "CapMonster Cloud — automated captcha solver"
+   },
+   "extShortName": {
+      "description": "",
+      "message": "CapMonster Cloud"
+   },
+   "getKey": {
+      "description": "",
+      "message": "Get a key"
+   },
+   "globalObjectDescription": {
+      "description": "",
+      "message": "Name of the field for interaction with the extension via a global object. More information about the extension settings can be found \u003Ca href=\"https://docs.capmonster.cloud/docs/extension/ext-settings\" target=\"_blank\" rel=\"noreferrer\" style=\"color: #7D6EFF\">in the article\u003C/a>."
+   },
+   "globalVariableSetting": {
+      "description": "",
+      "message": "Global variable"
+   },
+   "help": {
+      "description": "",
+      "message": "Help"
+   },
+   "login": {
+      "description": "",
+      "message": "Login"
+   },
+   "manualRecognition": {
+      "description": "",
+      "message": "Manual recognition"
+   },
+   "manualRecognitionDescription": {
+      "description": "",
+      "message": "This feature allows starting captcha solving using the \"Token\" method not automatically but by clicking the \"Solve\" button."
+   },
+   "markImageAsCaptcha": {
+      "description": "",
+      "message": "Mark image as captcha"
+   },
+   "off": {
+      "description": "",
+      "message": "Off"
+   },
+   "on": {
+      "description": "",
+      "message": "On"
+   },
+   "password": {
+      "description": "",
+      "message": "Password"
+   },
+   "port": {
+      "description": "",
+      "message": "Port"
+   },
+   "proxy": {
+      "description": "",
+      "message": "Proxy"
+   },
+   "proxyType": {
+      "description": "",
+      "message": "Proxy type"
+   },
+   "rcInfoText": {
+      "description": "",
+      "message": "Only click"
+   },
+   "repeatSolveAttempts": {
+      "description": "",
+      "message": "Repeat captcha solving in case of an error, attempts"
+   },
+   "selectInputForCaptchaResult": {
+      "description": "",
+      "message": "Select an input for the captcha result"
+   },
+   "settings": {
+      "description": "",
+      "message": "Settings"
+   },
+   "support": {
+      "description": "",
+      "message": "Support"
+   },
+   "textCaptcha": {
+      "description": "",
+      "message": "Text captcha"
+   },
+   "textCaptchaHelpLink": {
+      "description": "",
+      "message": "https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2260238337/Solving+text+captchas"
+   },
+   "textCaptchaModule": {
+      "description": "",
+      "message": "Text module"
+   },
+   "textCaptchaSaveOnSite": {
+      "description": "",
+      "message": "Save selected captcha position for sites"
+   },
+   "topUp": {
+      "description": "",
+      "message": "Add funds"
+   },
+   "wrongKey": {
+      "description": "",
+      "message": "Wrong key"
+   }
+}

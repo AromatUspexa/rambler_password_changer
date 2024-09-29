@@ -1,0 +1,61 @@
+{
+   "action": {
+      "default_icon": "img/icon.png",
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "css/content/solver.css" ],
+      "js": [ "content.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "turnstileInterceptor.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "recaptcha.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "hcaptcha.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "funcaptcha.js" ],
+      "matches": [ "*://*.arkoselabs.com/fc/*", "*://*.funcaptcha.com/fc/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": false,
+      "js": [ "pageScriptHandler.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; report-uri https://o111940.ingest.sentry.io/api/4504712665628672/security/?sentry_key=82d69ef4536b474e80b8343faaffd27a https://api.mixpanel.com"
+   },
+   "default_locale": "en",
+   "description": "__MSG_extDesc__",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "48": "img/icon.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhpXzaEUswcjL0OAqQCqQHBtWCVGFvgNze8nKuScaNOK2Z/wi/MdqFIZwN+SBTRokWNeR5MkfrRlocEx0KvhX0apsH0F4XPoyIatdW9h1IEZ7e1FZWB+Dtp4tiiIeDj5VSdnjCX1bU+fQmhOw1EPvPDSQQ3lS0Hxa+lJuTmV7BEbDoreb46oKsjDX/pA+aLxtc9wPMuXbKGI2vpP2fSYEDFDJob50IsHbvNGhL3eQKiZpw9TKobS7+nH+lIJ995Ow8NrEUqnNNMu0Rq9jWRuvqeKXwnsFbMZZQ9StefZsCQI8ZdRKJ+YsjdGloJuL4MCqiVhJ3kSudc5yKPgP0n+QSQIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_extName__",
+   "permissions": [ "storage", "cookies", "contextMenus", "activeTab", "declarativeNetRequest", "declarativeNetRequestFeedback", "scripting" ],
+   "short_name": "__MSG_extShortName__",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.11.16",
+   "web_accessible_resources": [ {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "resources": [ "defaultSettings.json", "recaptcha2Interceptor.js", "recaptcha3Interceptor.js", "hcaptchaInterceptor.js", "geetestInterceptor.js", "funcaptchaInterceptor.js", "turnstileInterceptor.js", "pageScript.js", "fonts/roboto/Roboto-Regular.ttf", "img/white-cogs.png", "img/blue-cogs-animated.gif", "img/green-cogs.png", "img/red-cogs.png" ]
+   } ]
+}

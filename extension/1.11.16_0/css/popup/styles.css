@@ -1,0 +1,110 @@
+/* roboto-regular */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''), url('../../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+}
+/* roboto-500 */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''), url('../../fonts/roboto/Roboto-Medium.ttf') format('truetype');
+}
+/* roboto-700 */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''), url('../../fonts/roboto/Roboto-Bold.ttf') format('truetype');
+}
+/* ubuntu-700 */
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''), url('../../fonts/ubuntu/Ubuntu-B.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: auto;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #141e28;
+}
+
+:root {
+    --ant-primary-5: #7d6eff;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    height: 30px;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
+    height: 28px;
+}
+
+.ant-tooltip-inner,
+.ant-tooltip-arrow-content {
+    background-color: #fafafa;
+}
+
+.ant-switch-checked {
+    background-color: #7d6eff;
+}
+
+.ant-input-focused,
+.ant-input:focus,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-input-number:hover,
+.ant-input-number-focused {
+    border-color: #7d6eff !important;
+}
+
+.ant-input,
+.ant-input-number,
+.ant-select,
+.ant-select-selector {
+    border-radius: 4px !important;
+}
+
+.ant-input:hover {
+    border-color: #7d6eff;
+}
+
+.ant-typography a,
+a.ant-typography,
+a.ant-typography:hover {
+    color: #7d6eff;
+}
+
+.ant-radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.ant-radio-button-wrapper {
+    display: block !important;
+    height: 22px !important;
+    line-height: 22px;
+    padding: 0 !important;
+    text-align: center;
+    background: #e1e1ff !important;
+    color: #7d6eff !important;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    background: #7d6eff !important;
+    color: white !important;
+}

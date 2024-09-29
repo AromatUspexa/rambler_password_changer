@@ -1,0 +1,111 @@
+{
+    "manifest_version": 2,
+
+    "default_locale": "en",
+
+    "name": "__MSG_extNameFirefox__",
+    "description": "__MSG_extDescFirefox__",
+    "short_name": "__MSG_extShortName__",
+    "version": "1.0.17",
+
+    "icons": {
+        "48": "img/icon.png"
+    },
+
+    "browser_action": {
+        "default_title": "CapMonster Cloud",
+        "default_icon": "img/icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "homepage_url": "https://capmonster.cloud",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "capmonser-cloud-ext-fire@zennolab.com"
+        }
+    },
+
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["content.js"],
+            "css": ["css/content/solver.css"],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": true,
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["turnstileInterceptor.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["recaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["hcaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["*://*.arkoselabs.com/fc/*", "*://*.funcaptcha.com/fc/*"],
+            "js": ["funcaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["pageScriptHandler.js"],
+            "run_at": "document_start",
+            "all_frames": false
+        }
+    ],
+
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+
+    "permissions": [
+        "storage",
+        "cookies",
+        "contextMenus",
+        "activeTab",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "declarativeNetRequestWithHostAccess",
+        "scripting",
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "*://*.funcaptcha.co/*",
+        "*://*.funcaptcha.com/*",
+        "*://*.arkoselabs.com/*",
+        "*://*.arkoselabs.cn/*",
+        "*://*.arkose.com.cn/*",
+        "*://*.google.com/recaptcha/*",
+        "*://*.recaptcha.net/recaptcha/*",
+        "*://*.hcaptcha.com/*"
+    ],
+    "content_security_policy": "script-src 'self'; object-src 'self'; report-uri https://o111940.ingest.sentry.io/api/4504712665628672/security/?sentry_key=82d69ef4536b474e80b8343faaffd27a https://api.mixpanel.com",
+    "web_accessible_resources": [
+        "defaultSettings.json",
+        "recaptcha2Interceptor.js",
+        "recaptcha3Interceptor.js",
+        "hcaptchaInterceptor.js",
+        "geetestInterceptor.js",
+        "funcaptchaInterceptor.js",
+        "turnstileInterceptor.js",
+        "pageScript.js",
+        "fonts/roboto/Roboto-Regular.ttf",
+        "img/white-cogs.png",
+        "img/blue-cogs-animated.gif",
+        "img/green-cogs.png",
+        "img/red-cogs.png"
+    ]
+}
