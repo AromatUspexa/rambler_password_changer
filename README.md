@@ -7,7 +7,7 @@ Python script for automatic rambler password change
 
 
 - [Запуск под Windows](#запуск-под-windows)
-- [data / config](#запуск-под-windows)
+- [data / config](#Data-/-config)
 
 ## Запуск под Windows
 - Установите [Python 3.11](https://www.python.org/downloads/windows/). Не забудьте поставить галочку напротив "Add Python to PATH".
