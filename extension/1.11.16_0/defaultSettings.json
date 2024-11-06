@@ -1,6 +1,6 @@
 {
     "isEnabled": true,
-    "clientKey": "",
+    "clientKey": "965ae424f15892d2a4e8f3f7c975f829",
     "captchaList": [
         "HCaptcha"
     ],
@@ -8,7 +8,7 @@
         "ReCaptcha2": 1,
         "HCaptcha": 1
     },
-    "repeatsCount": 0,
+    "repeatsCount": 5,
     "isEnabledIgnoreList": false,
     "ignoreList": [],
     "proxy": {
@@ -20,13 +20,13 @@
         "password": ""
     },
     "isManualResolving": false,
-    "delayAfterLoadPage": 2,
+    "delayAfterLoadPage": 5,
     "recaptchaClickSelector": ".recaptcha-checkbox-checkmark",
     "hCaptchaClickSelector": "div#checkbox",
     "globalVariable": "CMExtension",
     "delayStartCount": {
-        "ReCaptcha2": 0,
-        "HCaptcha": 0
+        "ReCaptcha2": 5,
+        "HCaptcha": 5
     },
     "autoClick": {
         "ReCaptcha2": true,
