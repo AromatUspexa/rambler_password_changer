@@ -82,7 +82,16 @@ async def is_frame_exist(page: Page) -> bool:
     img_selector = "//div[@aria-checked='true']"
     try:
         frame_locator = page.frame_locator('iframe[title="Widget containing checkbox for hCaptcha security challenge"]')
+<<<<<<< Updated upstream
         await frame_locator.locator(img_selector).wait_for(state='visible', timeout=60000)
+=======
+        logger.debug("Фрейм РЕШЕННОЙ КАПЧИ hCaptcha найден, проверка элемента капчи по селектору.")
+
+        # Ждем, пока элемент капчи станет видимым
+        await frame_locator.locator(img_selector).wait_for(state='visible', timeout=60000)
+        logger.debug("ГАЛОЧКА РЕШЕННОЙ КАПЧИ найдена и видна на странице.")
+
+>>>>>>> Stashed changes
         return True
     except Exception as e:
         logger.warning(f"Ошибка при проверке капчи")
@@ -126,6 +135,52 @@ async def change_password(page, context, login, password, new_password) -> bool:
     max_attempts = 5  # Добавляем максимальное количество попыток
     try:
         while attempts < max_attempts:
+<<<<<<< Updated upstream
+=======
+            # Шаг 1: Нажимаем на "Контрольный вопрос"
+           # await page.get_by_label("Контрольный вопрос", exact=True).click()
+            await page.locator('//*[@id = "question"]').wait_for(state='visible',timeout=5000)
+            await page.locator('//*[@id = "question"]').click()
+            await asyncio.sleep(1)
+
+            # Шаг 2: Выбираем "Любимое блюдо" в качестве вопроса
+            await page.get_by_text("Любимое блюдо").click()
+
+            # Шаг 3: Вводим секретное слово в ответ на вопрос
+            await page.locator('//*[@id="answer"]').fill(new_secret_word)
+
+            # Шаг 4: Вводим текущий пароль
+            await page.locator('//*[@id="password"]').fill(password)
+
+            # Шаг 5: Проходим капчу
+            captcha_result = await is_frame_exist(page)
+            if captcha_result:
+                # Шаг 6: Нажимаем "Сохранить" для смены секретного слова
+                await page.get_by_role("button", name="Сохранить").click()
+                await asyncio.sleep(1)
+
+                # Проверка успешности изменения секретного слова
+                secret_success = await notification_secret_change(page)
+                if secret_success:
+                    logger.success(f'{login}: секретное слово успешно изменено!')
+                else:
+                    logger.error(f'{login}: ошибка при изменении секретного слова. Повторяю попытку.')
+                    await page.reload()
+                    await asyncio.sleep(2)
+                    attempts += 1
+                    continue  # Переход к следующей попытке при неудаче
+            else:
+                logger.warning("Капча не была решена! Перезагружаю страницу и повторяю попытку.")
+                await page.reload()
+                await asyncio.sleep(2)
+                attempts += 1
+                continue
+
+            # Переход к изменению пароля после успешного изменения секретного слова
+            await page.locator('//a[@href="/account/change-password"][@class]').wait_for(state='visible',
+                                                                                         timeout=60000)
+            await page.locator('//a[@href="/account/change-password"][@class]').click()
+>>>>>>> Stashed changes
             await page.locator('//*[@id="password"]').fill(password)
             await page.locator('//*[@id="newPassword"]').fill(new_password)
             captcha_result = await is_frame_exist(page)
@@ -186,8 +241,48 @@ async def login_rambler(login: str, password: str, proxy: Proxy, page):
             if success:
                 break
 
+<<<<<<< Updated upstream
     await page.locator('//a[@href="/account/change-password"][@class]').wait_for(state='visible', timeout=60000)
     await page.locator('//a[@href="/account/change-password"][@class]').click()
+=======
+            # Заполнение пароля
+            logger.debug("Ввод пароля.")
+            await page.locator('//*[@id="password"]').fill(password)
+
+            # Нажатие на кнопку входа
+            logger.info("Попытка входа нажатием на кнопку 'Войти'.")
+            await page.locator('//button[@type="submit"][@data-cerber-id="login_form::main::login_button"]').click()
+
+            # Проверка на наличие капчи
+            exist_captcha = await is_captcha_exist(page)
+            if exist_captcha:
+                logger.debug("Капча обнаружена, запускаем процедуру решения капчи.")
+                status_login = await solve_captcha(page)
+                success = await check_login_errors(login, page)
+                if success:
+                    logger.info(f"Успешный вход для пользователя {login} после решения капчи.")
+                    break
+            else:
+                # Проверка на наличие ошибок входа
+                success = await check_login_errors(login, page)
+                if success:
+                    logger.info(f"Успешный вход для пользователя {login} без капчи.")
+                    break
+        except Exception as e:
+            logger.error(f"Ошибка при попытке входа для пользователя {login}: {str(e)}")
+            return False  # Выход из функции в случае ошибки при входе
+
+    # Переход на страницу смены секретного слова после успешного входа
+    try:
+        logger.debug("Переход на страницу смены секретного слова.")
+        await page.locator('//a[@href="/account/change-question"][@class]').wait_for(state='visible', timeout=60000)
+        await page.locator('//a[@href="/account/change-question"][@class]').click()
+        logger.info("Открыта страница смены секретного слова.")
+        return True
+    except Exception as e:
+        logger.error(f"Ошибка при переходе на страницу смены секретного слова: {str(e)}")
+        return False
+>>>>>>> Stashed changes
 
 
 async def ask_use_proxy():
