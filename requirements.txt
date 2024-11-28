@@ -18,3 +18,5 @@ setuptools~=75.1.0
 tqdm~=4.66.5
 loguru~=0.6.0
 better-proxy~=1.2.0
+questionary~=2.0.1
+httpx~=0.27.2
