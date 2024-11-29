@@ -7,7 +7,7 @@ import toml
 from rambler_change.paths import PATH_LIST, PATH_NEW_LIST, PROXY_LIST
 from playwright.async_api import Playwright, Page, BrowserContext
 from playwright.async_api import async_playwright
-from rambler_change.errors import LoginFailed
+from rambler_change.errors import LoginFailed, BanAccount
 from rambler_change.paths import JS_DIR
 from data.config import CAPTCHA_KEY
 from questionary import Style
@@ -35,8 +35,8 @@ def check_and_create_files():
 
 def generate_password() -> str | list[str]:
     ALPHNUM = (
-            'abcdefghijklmnopqrstuvwxyz' +
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+            'aabbccddeefghijklmnopqrstuvwxyz' +
+            'AABBCCDDEEFGHIJKLMNOPQRSTUVWXYZ' +
             '0011223344556677889900' +
             '@'
     )
@@ -89,6 +89,12 @@ async def check_wrong_log_or_pass(page: Page) -> bool:
     return await locator.is_visible()
 
 
+async def check_ban_status(page: Page) -> bool:
+    xpath_selector = "//div[@class='rc__BVnAD rc__E79Z1 styles_text__zlWVh styles_text__1tUs5']"
+    locator = page.locator(xpath_selector)
+    return await locator.is_visible()
+
+
 async def solve_captcha(page: Page):
     while True:
         solve_status = await is_frame_exist(page)
@@ -109,6 +115,7 @@ async def change_password(page, context, account, api_key) -> bool:
         while attempts < max_attempts:
             await page.locator('//*[@id="password"]').fill(account.password)
             await page.locator('//*[@id="newPassword"]').fill(account.new_password)
+            logger.info(f'{account.email} решение капчи...')
             captcha_result = await solve_captcha_2captcha(api_key)
             await _set_captcha_token(page, captcha_result)
             await page.locator('//button[@data-cerber-id="profile::change_password::save_password_button"]').click()
@@ -156,6 +163,11 @@ async def login_rambler(account, page):
         if wrong_log_pass:
             logger.error(f'{account.email}: неправильный логин или пароль!')
             raise LoginFailed("Failed to login")
+        await asyncio.sleep(1)
+        ban_status = await check_ban_status(page)
+        if ban_status:
+            logger.error(f'{account.email}: аккаунт заблокирован!')
+            raise BanAccount("Account is banned")
         exist_captcha = await is_captcha_exist(page)
         if exist_captcha:
             status_login = await solve_captcha(page)
@@ -239,17 +251,49 @@ async def solve_captcha_2captcha(api_key: str) -> str:
 
 
 async def _set_captcha_token(page: Page, captcha_token: str):
-    frame = await page.wait_for_selector('iframe[data-hcaptcha-widget-id]')
-    await page.evaluate(
-        'args => args[0].setAttribute("data-hcaptcha-response", args[1])',
-        [frame, captcha_token],
-    )
-    await page.evaluate(
-        'args => document.querySelector(args[0]).value = args[1]',
-        ['textarea[name=h-captcha-response]', captcha_token],
-    )
-    await page.evaluate('code => hcaptcha.submit(code)', captcha_token)
-    await page.wait_for_timeout(500)
+    try:
+        # Ждём появления iframe с капчей
+        iframe_element = await page.wait_for_selector('iframe[data-hcaptcha-widget-id]', timeout=10000)
+        if not iframe_element:
+            raise Exception("Не удалось найти iframe с капчей")
+
+        # Получаем объект Frame для iframe
+        frame = await iframe_element.content_frame()
+        if not frame:
+            raise Exception("Не удалось получить контент iframe")
+
+        # Устанавливаем значение токена в textarea внутри iframe
+        await frame.evaluate(
+            '''(token) => {
+                const textarea = document.querySelector('textarea[name="h-captcha-response"]');
+                if (textarea) {
+                    textarea.value = token;
+                } else {
+                    console.error("Не удалось найти textarea внутри iframe");
+                }
+            }''',
+            captcha_token
+        )
+
+        # Также устанавливаем значение токена в textarea на основной странице
+        await page.evaluate(
+            '''(token) => {
+                const textarea = document.querySelector('textarea[name="h-captcha-response"]');
+                if (textarea) {
+                    textarea.value = token;
+                } else {
+                    console.error("Не удалось найти textarea на странице");
+                }
+            }''',
+            captcha_token
+        )
+
+        # Отправляем капчу
+        await page.evaluate('hcaptcha.submit()')
+
+    except Exception as e:
+        logger.error(f"Ошибка в _set_captcha_token: {e}")
+        raise
 
 
 custom_style = Style([
@@ -314,6 +358,9 @@ async def process_account(account, use_proxy, playwright, semaphore, pbar, delay
                         return
                 finally:
                     await context.close()  #
+
+        except BanAccount:
+            return
         except LoginFailed:
             return
         except Exception as e:
@@ -335,7 +382,9 @@ async def run_change(user_response, semaphore, all_accounts):
         with tqdm(total=len(data), desc="Изменение паролей", unit="пользователь", dynamic_ncols=True,
                   leave=True) as pbar:
             tasks = [
-                process_account(account, user_response['proxy'], playwright, semaphore, pbar, delay=i * 15)
+                process_account(account, user_response['proxy'], playwright, semaphore, pbar, delay=i * 10)
                 for i, account in enumerate(all_accounts.accounts)
             ]
             await asyncio.gather(*tasks)
+
+

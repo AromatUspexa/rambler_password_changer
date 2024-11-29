@@ -1,7 +1,5 @@
 from pathlib import Path
 
-
-
 SCRIPT_DIR = Path(__file__).parent
 BASE_DIR = SCRIPT_DIR.parent
 DATA_DIR = BASE_DIR / 'data'
