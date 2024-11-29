@@ -162,6 +162,7 @@ async def login_rambler(account, page):
         wrong_log_pass = await check_wrong_log_or_pass(page)
         if wrong_log_pass:
             logger.error(f'{account.email}: неправильный логин или пароль!')
+            await write_password(account.email, account.password)
             raise LoginFailed("Failed to login")
         await asyncio.sleep(1)
         ban_status = await check_ban_status(page)
@@ -249,6 +250,10 @@ async def solve_captcha_2captcha(api_key: str) -> str:
             else:
                 raise ValueError(f"Error solving captcha: {result_data.get('request')}")
 
+
+async def write_password(login: str, password: str):
+    with open(PATH_NEW_LIST, 'a') as new_file:
+        new_file.write(f"{login}:{password}:bad account\n")
 
 async def _set_captcha_token(page: Page, captcha_token: str):
     try:
@@ -351,8 +356,7 @@ async def process_account(account, use_proxy, playwright, semaphore, pbar, delay
                         pbar.update(1)
                         return  # Завершаем функцию после успешного выполнения
                     else:
-                        with open(PATH_NEW_LIST, 'a') as new_file:
-                            new_file.write(f"{account.email}:{account.new_password}:WARNING\n")
+                        await write_password(account.email, account.password)
                         logger.error(f"{account.email}: Не удалось сменить пароль для пользователя")
                         pbar.update(1)
                         return
@@ -386,5 +390,3 @@ async def run_change(user_response, semaphore, all_accounts):
                 for i, account in enumerate(all_accounts.accounts)
             ]
             await asyncio.gather(*tasks)
-
-
