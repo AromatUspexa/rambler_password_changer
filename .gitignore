@@ -1,5 +1,4 @@
 .idea
-data
 /.venv/Include/
 /.venv/Lib/site-packages/annotated_types/__init__.py
 /.venv/Lib/site-packages/annotated_types/py.typed
