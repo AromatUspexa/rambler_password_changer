@@ -10,6 +10,7 @@ from playwright.async_api import async_playwright
 from rambler_change.errors import LoginFailed, BanAccount
 from rambler_change.paths import JS_DIR
 from data.config import CAPTCHA_KEY
+from data.config import HEADLESS
 from questionary import Style
 from tqdm.asyncio import tqdm
 from random import sample
@@ -190,7 +191,7 @@ async def create_context(playwright: Playwright, use_proxy: bool, proxy) -> tupl
             context = await playwright.chromium.launch_persistent_context(
                 proxy=proxy.as_playwright_proxy,
                 user_data_dir=temp_dir,
-                headless=False,
+                headless=HEADLESS,
             )
             await context.add_init_script(path=JS_DIR)
             page = await context.new_page()
@@ -198,7 +199,7 @@ async def create_context(playwright: Playwright, use_proxy: bool, proxy) -> tupl
         else:
             context = await playwright.chromium.launch_persistent_context(
                 user_data_dir=temp_dir,
-                headless=False,
+                headless=HEADLESS,
             )
         await context.add_init_script(path=JS_DIR)
         page = await context.new_page()
@@ -386,7 +387,7 @@ async def run_change(user_response, semaphore, all_accounts):
         with tqdm(total=len(data), desc="Изменение паролей", unit="пользователь", dynamic_ncols=True,
                   leave=True) as pbar:
             tasks = [
-                process_account(account, user_response['proxy'], playwright, semaphore, pbar, delay=i * 10)
+                process_account(account, user_response['proxy'], playwright, semaphore, pbar, delay=i * 5)
                 for i, account in enumerate(all_accounts.accounts)
             ]
             await asyncio.gather(*tasks)
