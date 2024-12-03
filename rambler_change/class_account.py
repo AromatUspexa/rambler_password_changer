@@ -1,13 +1,16 @@
 from better_proxy import Proxy
 from rambler_change.scripts import generate_password
+from rambler_change.scripts import generate_random_word
+
 
 
 class Account:
-    def __init__(self, email: str, password: str, proxy: Proxy, new_password: str):
+    def __init__(self, email: str, password: str, proxy: Proxy, new_password: str, new_question: str):
         self.email = email
         self.password = password
         self.proxy = proxy
         self.new_password = new_password
+        self.new_question = new_question
 
     def __str__(self):
         return f"Account(email={self.email}, proxy={self.proxy})"
@@ -34,16 +37,17 @@ class AccountManager:
         accounts = []
         for index, account_line in enumerate(accounts_data):
             new_password = generate_password()
+            new_question = generate_random_word()
             email, password = account_line.strip().split(':')
             # Если прокси не используются, передаем None
             if use_proxy:
                 proxy = Proxy.from_str(proxies_data[index].strip())
             else:
                 proxy = None
-            accounts.append(Account(email, password, proxy, new_password))
+            accounts.append(Account(email, password, proxy, new_password, new_question))
         return accounts
 
     def _load_file(self, file_path: str) -> list[str]:
         with open(file_path, 'r') as file:
-            return file.readlines()
+            return [line.strip() for line in file if line.strip()]
 
