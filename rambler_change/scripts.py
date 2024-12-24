@@ -19,8 +19,7 @@ from rambler_change.paths import PATH_LIST, PATH_NEW_LIST, PROXY_LIST
 from questionary import Style
 from tqdm.asyncio import tqdm
 
-from data.config import CAPTCHA_KEY
-from data.config import HEADLESS
+from data.config import CAPTCHA_KEY, HEADLESS, DELAY
 from rambler_change.errors import CaptchaTaskCreationError, CaptchaSolutionError, CaptchaError, BadDataAccount, \
     ResponseCodeFailure, AttemptsErrorReached, PageCloseError
 
@@ -82,6 +81,11 @@ async def check_login_status(login, page) -> bool:
         return False
 
 
+async def check_phone_notification(page: Page) -> None:
+    if page.url == "https://id.rambler.ru/login-20/phone-link?rname=":
+        await page.goto("https://id.rambler.ru/account/profile")
+
+
 async def is_captcha_exist(page: Page) -> bool:
     captcha_selector = '//div[@id="anchor"]'
     try:
@@ -99,9 +103,9 @@ async def check_wrong_log_or_pass(page: Page) -> bool:
 
 
 async def check_captcha_exist(page: Page) -> bool:
-    xpath_selector = '//div[@id="anchor"]'
+    xpath_selector = '//label[@for="recaptcha"]'
     try:
-        await page.wait_for_selector(xpath_selector, timeout=2000)
+        await page.wait_for_selector(xpath_selector, timeout=10000)
         return True
     except Exception:
         return False
@@ -217,8 +221,10 @@ async def login_rambler(account, page):
             captcha_exist = await check_captcha_exist(page)
             if captcha_exist:
                 try:
+                    logger.info(f'Логин: {account.email} решение капчи...')
                     captcha_result = await solve_captcha_2captcha(CAPTCHA_KEY, site_key, url)
                     await _set_captcha_token(page, captcha_result)
+                    await page.locator('//button[@type="submit"][@data-cerber-id="login_form::main::login_button"]').click()
                 except CaptchaError as e:
                     logger.error(f"{account.email} ошибка при решении капчи : {e}")
                     continue
@@ -227,10 +233,11 @@ async def login_rambler(account, page):
             if wrong_log_pass:
                 await write_bad_data(account.email, account.password)
                 raise BadDataAccount
-            await asyncio.sleep(1)
+            await asyncio.sleep(DELAY)
             ban_status = await check_ban_status(page)
             if ban_status:
                 logger.error(f'{account.email}: аккаунт заблокирован!')
+            await check_phone_notification(page)
             success = await check_login_status(account.email, page)
             if success:
                 return
@@ -245,6 +252,7 @@ async def login_rambler(account, page):
                 attempts += 1
                 continue
             raise exc
+        await page.context.clear_cookies()
         attempts += 1
     raise AttemptsErrorReached("Превышено количество попыток логина.")
 
